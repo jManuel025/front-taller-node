@@ -22,6 +22,7 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'Taller node',
       theme: ThemeData(
+        fontFamily: 'SpaceGrotesk',
         accentColor: Color(0xFFFFBF3B),
         primaryColor: Color(0xFF4F3EC8),
       ),

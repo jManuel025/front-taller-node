@@ -118,7 +118,7 @@ class _LoginPageState extends State<LoginPage> {
       user.email = emailController.text;
       user.password = passwordController.text;
       final resp = await loginProvider.login(user);
-      _prefs.token = resp.message;
+      _prefs.token = resp['message'];
       if (_prefs.token.toString().isNotEmpty) {
         Navigator.pushReplacementNamed(context, 'employees');
       } else {

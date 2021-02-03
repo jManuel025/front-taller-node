@@ -24,6 +24,9 @@ class EmployeeModel {
         direccion: json["direccion"],
       );
 
+  List<EmployeeModel> fromJsonList(List employees) =>
+      employees.map((emp) => EmployeeModel.fromJson(emp)).toList();
+
   Map<String, dynamic> toJson() => {
         "id": id,
         "nombre": nombre,
