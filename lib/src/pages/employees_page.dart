@@ -15,31 +15,19 @@ class _EmployeesPageState extends State<EmployeesPage> {
     return Scaffold(
       drawer: _userInfo(),
       appBar: AppBar(
+        brightness: Brightness.dark,
+        actions: [IconButton(icon: Icon(Icons.search), onPressed: () {})],
         title: Text('Empleados', style: TextStyle(fontWeight: FontWeight.bold)),
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {},
+        backgroundColor: Theme.of(context).primaryColor,
         child: Icon(
           Icons.add,
-          color: Theme.of(context).primaryColor,
+          color: Colors.white,
         ),
       ),
-      body: FutureBuilder(
-        future: employeesProvider.getEmployees(),
-        builder: (BuildContext context, AsyncSnapshot snapshot) {
-          if (snapshot.hasData) {
-            final employees = snapshot.data;
-            return ListView.builder(
-              itemCount: employees.length,
-              itemBuilder: (_, i) {
-                return _employeeCard(employees, i);
-              },
-            );
-          } else {
-            return Text('no hay');
-          }
-        },
-      ),
+      body: _employeesList(),
     );
   }
 
@@ -96,7 +84,26 @@ class _EmployeesPageState extends State<EmployeesPage> {
     );
   }
 
-  Widget _employeeCard(List<EmployeeModel> employees, int i) {
+  Widget _employeesList() {
+    return FutureBuilder(
+      future: employeesProvider.getEmployees(),
+      builder: (BuildContext context, AsyncSnapshot snapshot) {
+        if (snapshot.hasData) {
+          final employees = snapshot.data;
+          return ListView.builder(
+            itemCount: employees.length,
+            itemBuilder: (_, i) {
+              return _employeeCard(employees, i);
+            },
+          );
+        } else {
+          return Text('no hay');
+        }
+      },
+    );
+  }
+
+  Widget _employeeCard(List<Employee> employees, int i) {
     return Card(
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -108,7 +115,7 @@ class _EmployeesPageState extends State<EmployeesPage> {
     );
   }
 
-  Widget _employeeAvatar(List<EmployeeModel> employees, int i) {
+  Widget _employeeAvatar(List<Employee> employees, int i) {
     return Expanded(
       flex: 1,
       child: Container(
@@ -127,7 +134,7 @@ class _EmployeesPageState extends State<EmployeesPage> {
     );
   }
 
-  Widget _employeeData(List<EmployeeModel> employees, int i) {
+  Widget _employeeData(List<Employee> employees, int i) {
     return Expanded(
       flex: 5,
       child: Container(

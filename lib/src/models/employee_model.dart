@@ -1,4 +1,13 @@
-class EmployeeModel {
+class Employees {
+  List<Employee> employees = [];
+  Employees();
+  Employees.fromJsonList(List<dynamic> jsonList) {
+    if (jsonList == null) return;
+    employees = jsonList.map((emp) => new Employee.fromJson(emp)).toList();
+  }
+}
+
+class Employee {
   int id;
   String nombre;
   String apellidos;
@@ -6,7 +15,7 @@ class EmployeeModel {
   String correo;
   String direccion;
 
-  EmployeeModel({
+  Employee({
     this.id,
     this.nombre,
     this.apellidos,
@@ -15,7 +24,7 @@ class EmployeeModel {
     this.direccion,
   });
 
-  factory EmployeeModel.fromJson(Map<String, dynamic> json) => EmployeeModel(
+  factory Employee.fromJson(Map<String, dynamic> json) => Employee(
         id: json["id"],
         nombre: json["nombre"],
         apellidos: json["apellidos"],
@@ -23,9 +32,6 @@ class EmployeeModel {
         correo: json["correo"],
         direccion: json["direccion"],
       );
-
-  List<EmployeeModel> fromJsonList(List employees) =>
-      employees.map((emp) => EmployeeModel.fromJson(emp)).toList();
 
   Map<String, dynamic> toJson() => {
         "id": id,

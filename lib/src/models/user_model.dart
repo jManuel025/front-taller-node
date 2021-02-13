@@ -1,10 +1,5 @@
-import 'dart:convert';
-
-UserModel userModelFromJson(String str) => UserModel.fromJson(json.decode(str));
-String userModelToJson(UserModel data) => json.encode(data.toJson());
-
-class UserModel {
-  UserModel({
+class User {
+  User({
     this.email,
     this.password,
   });
@@ -12,7 +7,7 @@ class UserModel {
   String email;
   String password;
 
-  factory UserModel.fromJson(Map<String, dynamic> json) => UserModel(
+  factory User.fromJson(Map<String, dynamic> json) => User(
         email: json["email"],
         password: json["password"],
       );

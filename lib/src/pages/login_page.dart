@@ -14,7 +14,7 @@ final emailController = new TextEditingController();
 final passwordController = new TextEditingController();
 final loginProvider = new LoginProvider();
 final _prefs = Preferences();
-UserModel user = new UserModel();
+User user = new User();
 
 class _LoginPageState extends State<LoginPage> {
   @override
