@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:front_taller_node/src/models/employee_model.dart';
 import 'package:front_taller_node/src/provider/employees_provider.dart';
 
@@ -20,7 +21,7 @@ class _EmployeesPageState extends State<EmployeesPage> {
         title: Text('Empleados', style: TextStyle(fontWeight: FontWeight.bold)),
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () {},
+        onPressed: () => Navigator.pushNamed(context, 'employee/create'),
         backgroundColor: Theme.of(context).primaryColor,
         child: Icon(
           Icons.add,

@@ -22,11 +22,7 @@ class _LoginPageState extends State<LoginPage> {
     final size = MediaQuery.of(context).size;
     return Scaffold(
       backgroundColor: Theme.of(context).primaryColor,
-      appBar: AppBar(
-        backgroundColor: Theme.of(context).primaryColor,
-        elevation: 0.0,
-      ),
-      body: _formContainer(size),
+      body: SafeArea(child: _formContainer(size)),
     );
   }
 
@@ -40,10 +36,11 @@ class _LoginPageState extends State<LoginPage> {
           borderRadius: BorderRadius.circular(10.0),
         ),
         child: Container(
-            padding: EdgeInsets.all(25.0),
-            height: size.height * 0.40,
-            width: size.width * 0.95,
-            child: _loginForm(context)),
+          padding: EdgeInsets.all(25.0),
+          height: size.height * 0.40,
+          width: size.width * 0.95,
+          child: _loginForm(context),
+        ),
       ),
     );
   }
@@ -57,9 +54,7 @@ class _LoginPageState extends State<LoginPage> {
         children: [
           _emailInput(),
           _passwordInput(),
-          SizedBox(
-            height: 10.0,
-          ),
+          SizedBox(height: 10.0),
           _submitButton(context),
         ],
       ),
@@ -69,33 +64,33 @@ class _LoginPageState extends State<LoginPage> {
   // email input
   Widget _emailInput() {
     return TextFormField(
-      // style: TextStyle(fontSize: 18.0),
       validator: (email) => isEmail(email),
       controller: emailController,
       decoration: InputDecoration(
-          border: OutlineInputBorder(),
-          labelText: 'Email',
-          hintText: 'mail@mail.com'),
+        border: OutlineInputBorder(),
+        labelText: 'Email',
+        hintText: 'mail@mail.com',
+      ),
     );
   }
 
   // password input
   Widget _passwordInput() {
     return TextField(
-      // style: TextStyle(fontSize: 18.0),
       controller: passwordController,
       obscureText: true,
       decoration: InputDecoration(
-          border: OutlineInputBorder(),
-          labelText: 'Password',
-          hintText: '123456'),
+        border: OutlineInputBorder(),
+        labelText: 'Password',
+        hintText: '123456',
+      ),
     );
   }
 
   Widget _submitButton(BuildContext context) {
     return TextButton(
       child: Text(
-        'LOGIN',
+        'Login',
         style: TextStyle(
           fontWeight: FontWeight.bold,
           color: Colors.white,
@@ -103,9 +98,11 @@ class _LoginPageState extends State<LoginPage> {
       ),
       style: ButtonStyle(
         minimumSize: MaterialStateProperty.all<Size>(
-            Size(MediaQuery.of(context).size.width * 0.5, 48.0)),
-        backgroundColor:
-            MaterialStateProperty.all<Color>(Theme.of(context).accentColor),
+          Size(MediaQuery.of(context).size.width * 0.5, 48.0),
+        ),
+        backgroundColor: MaterialStateProperty.all<Color>(
+          Theme.of(context).accentColor,
+        ),
       ),
       onPressed: () => _submit(context),
     );

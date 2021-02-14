@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:front_taller_node/src/pages/login_page.dart';
 import 'package:front_taller_node/src/pages/employees_page.dart';
+import 'package:front_taller_node/src/pages/new_employee_page.dart';
 import 'package:front_taller_node/src/utils/preferences.dart';
 
 void main() async {
@@ -15,8 +16,9 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
-      statusBarColor: Color(0xFF4F3EC8),
-      systemNavigationBarColor: Color(0xFF4F3EC8),
+      statusBarColor: null,
+      statusBarBrightness: Brightness.dark,
+      statusBarIconBrightness: Brightness.light,
     ));
     return MaterialApp(
       debugShowCheckedModeBanner: false,
@@ -29,6 +31,7 @@ class MyApp extends StatelessWidget {
       routes: {
         'login': (BuildContext context) => LoginPage(),
         'employees': (BuildContext context) => EmployeesPage(),
+        'employee/create': (BuildContext context) => NewEmployee(),
       },
       initialRoute: 'login',
     );
