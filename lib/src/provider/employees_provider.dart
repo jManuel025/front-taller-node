@@ -6,7 +6,7 @@ import 'package:front_taller_node/src/models/employee_model.dart';
 
 final _prefs = Preferences();
 
-class EmployeesProvider {
+class EmployeeProvider {
   String _url = 'http://192.168.100.26:8000';
 
   Future<List<Employee>> getEmployees() async {
@@ -19,7 +19,16 @@ class EmployeesProvider {
     return data.employees;
   }
 
-  // Future<dynamic> addEmployee() async {
-  //   return [];
-  // }
+  Future<dynamic> addEmployee(Employee employee) async {
+    final endpoint = '$_url/empleados/';
+    final res = await http.post(endpoint,
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json',
+          'Authorization': 'bearer ${_prefs.token}'
+        },
+        body: employee.toJson());
+    final data = json.decode(res.body)['message'];
+    return data;
+  }
 }

@@ -8,7 +8,7 @@ class EmployeesPage extends StatefulWidget {
   _EmployeesPageState createState() => _EmployeesPageState();
 }
 
-final employeesProvider = new EmployeesProvider();
+final employeeProvider = new EmployeeProvider();
 
 class _EmployeesPageState extends State<EmployeesPage> {
   @override
@@ -87,7 +87,7 @@ class _EmployeesPageState extends State<EmployeesPage> {
 
   Widget _employeesList() {
     return FutureBuilder(
-      future: employeesProvider.getEmployees(),
+      future: employeeProvider.getEmployees(),
       builder: (BuildContext context, AsyncSnapshot snapshot) {
         if (snapshot.hasData) {
           final employees = snapshot.data;

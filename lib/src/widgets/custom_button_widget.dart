@@ -16,44 +16,52 @@ class CustomButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
-    return type == Type.primary
-        ? (ElevatedButton(
-            style: ButtonStyle(
-              textStyle: MaterialStateProperty.all<TextStyle>(
-                TextStyle(fontWeight: FontWeight.bold),
-              ),
-              backgroundColor: MaterialStateProperty.all<Color>(
-                Theme.of(context).accentColor,
-              ),
-              minimumSize: MaterialStateProperty.all<Size>(
-                Size(size.width * 0.40, 48.0),
-              ),
-            ),
-            onPressed: onPressed,
-            child: Text(
-              text,
-              style: TextStyle(
-                fontWeight: FontWeight.bold,
-                color: Colors.white,
-              ),
-            ),
-          ))
-        : (OutlinedButton(
-            style: ButtonStyle(
-              side: MaterialStateProperty.all<BorderSide>(
-                  BorderSide(color: Theme.of(context).primaryColor)),
-              minimumSize: MaterialStateProperty.all<Size>(
-                Size(size.width * 0.40, 48.0),
-              ),
-            ),
-            onPressed: onPressed,
-            child: Text(
-              text,
-              style: TextStyle(
-                fontWeight: FontWeight.bold,
-                color: Theme.of(context).primaryColor,
-              ),
-            ),
-          ));
+    final Map<Type, Widget> button = {
+      Type.primary: ElevatedButton(
+        style: ButtonStyle(
+          shape: MaterialStateProperty.all<OutlinedBorder>(
+              RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(10.0))),
+          textStyle: MaterialStateProperty.all<TextStyle>(
+            TextStyle(fontWeight: FontWeight.bold),
+          ),
+          backgroundColor: MaterialStateProperty.all<Color>(
+            Theme.of(context).accentColor,
+          ),
+          minimumSize: MaterialStateProperty.all<Size>(
+            Size(size.width * 0.40, 48.0),
+          ),
+        ),
+        onPressed: onPressed,
+        child: Text(
+          text,
+          style: TextStyle(
+            fontWeight: FontWeight.bold,
+            color: Colors.white,
+          ),
+        ),
+      ),
+      Type.secondary: OutlinedButton(
+        style: ButtonStyle(
+          shape: MaterialStateProperty.all<OutlinedBorder>(
+              RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(10.0))),
+          side: MaterialStateProperty.all<BorderSide>(
+              BorderSide(color: Theme.of(context).primaryColor)),
+          minimumSize: MaterialStateProperty.all<Size>(
+            Size(size.width * 0.40, 48.0),
+          ),
+        ),
+        onPressed: onPressed,
+        child: Text(
+          text,
+          style: TextStyle(
+            fontWeight: FontWeight.bold,
+            color: Theme.of(context).primaryColor,
+          ),
+        ),
+      ),
+    };
+    return button[type];
   }
 }

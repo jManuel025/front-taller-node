@@ -3,6 +3,7 @@ import 'package:front_taller_node/src/utils/preferences.dart';
 import 'package:front_taller_node/src/utils/validations.dart';
 import 'package:front_taller_node/src/models/user_model.dart';
 import 'package:front_taller_node/src/provider/login_provider.dart';
+import 'package:front_taller_node/src/widgets/custom_button_widget.dart';
 
 class LoginPage extends StatefulWidget {
   @override
@@ -10,8 +11,6 @@ class LoginPage extends StatefulWidget {
 }
 
 final loginFormKey = GlobalKey<FormState>();
-final emailController = new TextEditingController();
-final passwordController = new TextEditingController();
 final loginProvider = new LoginProvider();
 final _prefs = Preferences();
 User user = new User();
@@ -55,7 +54,11 @@ class _LoginPageState extends State<LoginPage> {
           _emailInput(),
           _passwordInput(),
           SizedBox(height: 10.0),
-          _submitButton(context),
+          CustomButton(
+            text: 'Login',
+            type: Type.primary,
+            onPressed: () => _submit(context),
+          )
         ],
       ),
     );
@@ -64,8 +67,8 @@ class _LoginPageState extends State<LoginPage> {
   // email input
   Widget _emailInput() {
     return TextFormField(
-      validator: (email) => isEmail(email),
-      controller: emailController,
+      validator: (email) => isValid(email, Value.email),
+      onSaved: (email) => {user.email = email},
       decoration: InputDecoration(
         border: OutlineInputBorder(),
         labelText: 'Email',
@@ -76,9 +79,9 @@ class _LoginPageState extends State<LoginPage> {
 
   // password input
   Widget _passwordInput() {
-    return TextField(
-      controller: passwordController,
+    return TextFormField(
       obscureText: true,
+      onSaved: (password) => {user.password = password},
       decoration: InputDecoration(
         border: OutlineInputBorder(),
         labelText: 'Password',
@@ -87,33 +90,10 @@ class _LoginPageState extends State<LoginPage> {
     );
   }
 
-  Widget _submitButton(BuildContext context) {
-    return TextButton(
-      child: Text(
-        'Login',
-        style: TextStyle(
-          fontWeight: FontWeight.bold,
-          color: Colors.white,
-        ),
-      ),
-      style: ButtonStyle(
-        minimumSize: MaterialStateProperty.all<Size>(
-          Size(MediaQuery.of(context).size.width * 0.5, 48.0),
-        ),
-        backgroundColor: MaterialStateProperty.all<Color>(
-          Theme.of(context).accentColor,
-        ),
-      ),
-      onPressed: () => _submit(context),
-    );
-  }
-
   // enviar formulario
   void _submit(BuildContext context) async {
     if (loginFormKey.currentState.validate()) {
       loginFormKey.currentState.save();
-      user.email = emailController.text;
-      user.password = passwordController.text;
       final resp = await loginProvider.login(user);
       _prefs.token = resp['message'];
       if (_prefs.token.toString().isNotEmpty) {

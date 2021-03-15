@@ -1,13 +1,25 @@
-String isEmail(String email) {
-  RegExp pattern = new RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}');
-  print(pattern.hasMatch(email));
-  return pattern.hasMatch(email) ? null : 'Invalid email';
-}
+enum Value { email, name, phoneNumber, address }
 
-// String isPassword(String password) {
-//   RegExp pattern =
-//       new RegExp(r'^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}');
-//   return pattern.hasMatch(password)
-//       ? 'Enter a valid password'
-//       : 'Invalid password';
-// }
+String isValid(String text, Value value) {
+  Map<Value, Map<String, dynamic>> pattern = {
+    Value.email: {
+      'regex': new RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}'),
+      'message': 'Invalid email'
+    },
+    Value.name: {
+      'regex': new RegExp(r'^[a-zA-Z]+(([,. -][a-zA-Z ])?[a-zA-Z]*)*$'),
+      'message': 'Invalid name'
+    },
+    Value.phoneNumber: {
+      'regex': new RegExp(r'^[0-9]{10}$'),
+      'message': 'Invalid phone number'
+    },
+    Value.address: {
+      'regex': new RegExp(r'^[#.0-9a-zA-Z\s,-]{5,200}$'),
+      'message': 'Invalid address'
+    },
+  };
+  return pattern[value]['regex'].hasMatch(text)
+      ? null
+      : pattern[value]['message'];
+}
